@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="./lib/fxJs.js"></script>
+</head>
+<body>
+
+홀수 n개 더하기
+<script>
+  function f1(limit, list) {
+    let acc = 0;
+    for (const a of list) {
+      if (a % 2) {
+        const b = a * a;
+        acc += b;
+        if (--limit === 0) break;
+      }
+    }
+    // console.log(acc);
+  }
+
+  f1(3, [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
+</script>
+
+2. if를 filter로
+3. 값 변화 후 변수 할당을 map으로
+4. break를 take로
+5. 축양 및 합산을 reducer로
+
+<script>
+  const add = (a, b) => a + b;
+
+  function f1(limit, list) {
+    _.go(
+      list,
+      L.filter(a => a % 2),
+      L.map(a => a * a),
+      L.take(limit),
+      _.reduce(add),
+      console.log
+    );
+  }
+
+  f1(3, [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
+</script>
+
+</body>
+</html>
