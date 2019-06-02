@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport"
+				content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>query, queryToObject</title>
+	<script src="./lib/fxJs.js"></script>
+</head>
+<body>
+<script>
+	const obj1 = {
+	  a: 1,
+		b: undefined,
+		c: 'CC',
+		d: 'DD',
+	};
+	// a=1&c=CC&d=DD
+
+	function query1(obj) {
+	  let res = '';
+		for(const k in obj) {
+		  const v = obj[k];
+		  if (v === undefined) continue;
+		  if (res !== '') res += '&'
+		  res += k + '=' + v;
+		}
+		return res;
+	}
+	// console.log(query1(obj1));
+
+  function query2(obj) {
+    return Object
+			.entries(obj)
+			.reduce((query, [k, v], i) => {
+			  if (v === undefined) return query;
+			  return `${query}${i > 0 ? '&' : ''}${k}=${v}`;
+			}, '');
+  }
+  // console.log(query2(obj1));
+
+  // console.log(query1(obj1));
+
+	const join = _.curry((sep, iter) =>
+    _.reduce((a, b) => `${a}${sep}${b}`, iter));
+
+  const query3 = (obj) =>
+      join('&',
+      _.map(([k, v]) => `${k}=${v}`,
+        _.reject(([_, v]) => v === undefined,
+          Object.entries(obj))));
+
+  // console.log(query3(obj1));
+
+  const query4 = _.pipe(
+		Object.entries,
+    L.reject(([_, v]) => v === undefined),
+    L.map(join('=')),
+		join('&'));
+
+  console.log(query4(obj1));
+</script>
+
+<script>
+	const split = _.curry((sep, str) => str.split(sep));
+	const queryToObject = _.pipe(
+		split('&'),
+		_.map(split('=')),
+		_.map(([k, v])=> ({ [k]: v })),
+		_.reduce(Object.assign)
+	);
+
+	console.log(queryToObject('a=1&c=CC&d=DD'));
+</script>
+</body>
+</html>

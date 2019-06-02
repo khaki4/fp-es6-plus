@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport"
+				content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>명령형 습관 지우기</title>
+	<script src="./lib/fxJs.js"></script>
+</head>
+<body>
+1. reduce + 복잡한 함수 acc 보다 map + 간단한 함수 + reduce
+
+<script>
+  const users = [
+    { name: 'AA', age: 35 },
+    { name: 'BB', age: 26 },
+    { name: 'CC', age: 28 },
+    { name: 'DD', age: 34 },
+    { name: 'EE', age: 23 },
+  ];
+
+  // console.log(_.reduce((total, u) => total + u.age, 0, users));
+
+  const add = (a, b) => a + b;
+  const ages = L.map(u => u.age);
+
+  // console.log(_.reduce(add, ages(users)));
+</script>
+
+2. reduce 하나 보다 map + filter + reduce
+<script>
+  // console.log(
+  //   _.reduce((total, u) => {
+  //     return u.age >= 30 ? total : total + u.age;
+	// 	},
+  //     0,
+	// 		users)
+	// );
+
+  console.log(
+    _.reduce(add,
+      _.map(u => u.age,
+        _.filter(u => u.age < 30, users))));
+
+  console.log(
+    _.reduce(add,
+      L.map(u => u.age,
+        L.filter(u => u.age < 30, users))));
+
+  console.log(
+    _.reduce(add,
+      L.filter(n => n < 30,
+        L.map(u => u.age, users))));
+</script>
+</body>
+</html>
