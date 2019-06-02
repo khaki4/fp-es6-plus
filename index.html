@@ -1,29 +1,30 @@
 <!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-    <script src="./lib/fxJs.js"></script>
+	<meta charset="UTF-8">
+	<meta name="viewport"
+				content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Document</title>
+	<script src="./lib/fxJs.js"></script>
 </head>
 <body>
 
 홀수 n개 더하기
 <script>
-  function f1(limit, list) {
-    let acc = 0;
-    for (const a of list) {
-      if (a % 2) {
-        const b = a * a;
-        acc += b;
-        if (--limit === 0) break;
-      }
+    function f1(limit, list) {
+        let acc = 0;
+        for (const a of list) {
+            if (a % 2) {
+                const b = a * a;
+                acc += b;
+                if (--limit === 0) break;
+            }
+        }
+        // console.log(acc);
     }
-    // console.log(acc);
-  }
 
-  f1(3, [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
+    // f1(3, [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
 </script>
 
 2. if를 filter로
@@ -32,21 +33,83 @@
 5. 축양 및 합산을 reducer로
 
 <script>
-  const add = (a, b) => a + b;
+    const add = (a, b) => a + b;
 
-  function f1(limit, list) {
-    _.go(
-      list,
-      L.filter(a => a % 2),
-      L.map(a => a * a),
-      L.take(limit),
-      _.reduce(add),
-      console.log
-    );
-  }
+    function f1(limit, list) {
+        _.go(
+            list,
+            L.filter(a => a % 2),
+            L.map(a => a * a),
+            L.take(limit),
+            _.reduce(add),
+        );
+    }
 
-  f1(3, [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
+    // f1(3, [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
 </script>
+
+6. while을 range로
+7. 효과를 each로 구분
+
+<script>
+    function f3(end) {
+        let i = 0;
+        while (i < end) {
+            console.log(i);
+            i++;
+        }
+    }
+
+    // f3(10);
+
+    function f4(end) {
+        _.each(console.log, L.range(end));
+    }
+
+    // f4(10);
+</script>
+
+8. 추억의 별 그리기, 구구단
+
+<script>
+    const join = sep => _.reduce((a, b) => `${a}${sep}${b}`);
+    _.go(
+        L.range(1, 6),
+        L.map(L.range),
+        L.map(L.map(_ => '*')),
+        L.map(join('')),
+        join('\n'),
+        console.log,
+    );
+
+    /*_.go(
+		L.range(1, 6),
+			L.map(s => _.go(
+			s,
+			L.range,
+			L.map(_ => '*'),
+			_.reduce((a, b) => `${a}${b}`)
+		)),
+		_.reduce((a, b) => `${a}\n${b}`),
+		console.log,
+		);*/
+</script>
+
+9. 구구단
+
+<script>
+    _.go(
+        L.range(2, 10),
+        L.map(a => _.go(
+            L.range(1, 10),
+            L.map(b => `${a}x${b}=${a * b}`),
+            join('\n'),
+        )),
+        join('\n\n'),
+        console.log
+    );
+</script>
+
 
 </body>
 </html>
