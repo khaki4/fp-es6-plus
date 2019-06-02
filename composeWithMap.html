@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>맵으로 합성하기</title>
+    <script src="./lib/fxJs.js"></script>
+  </head>
+  <body>
+    ## 안전한 합성에 대해 1. map으로 합성하기
+
+    <script>
+      const f = x => x + 10;
+      const g = x => x - 5;
+      const fg = x => f(g(x));
+
+      _.go(10, fg, console.log);
+
+      _.go([], L.map(fg), _.each(console.log));
+    </script>
+
+    2. find 대신 L.filter 써보기
+
+    <script>
+      const users = [
+        { name: "AA", age: 35 },
+        { name: "BB", age: 26 },
+        { name: "CC", age: 28 },
+        { name: "DD", age: 34 },
+        { name: "EE", age: 23 }
+      ];
+
+      const user = _.find(u => u.name === "DD", users);
+
+      _.go(users,
+        L.filter(u => u.name === "BB"),
+        L.take(1),
+        L.map(u => u.age),
+        _.each(console.log)
+      );
+    </script>
+  </body>
+</html>
