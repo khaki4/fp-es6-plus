@@ -6,7 +6,8 @@
 				content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
 	<title>Document</title>
-	<script src="./lib/fxJs.js"></script>
+    <script src="./lib/fxJs.js"></script>
+    <script src="./objectToIterable.js"></script>
 </head>
 <body>
 
@@ -73,14 +74,14 @@
 
 <script>
     const join = sep => _.reduce((a, b) => `${a}${sep}${b}`);
-    _.go(
-        L.range(1, 6),
-        L.map(L.range),
-        L.map(L.map(_ => '*')),
-        L.map(join('')),
-        join('\n'),
-        console.log,
-    );
+    // _.go(
+    //     L.range(1, 6),
+    //     L.map(L.range),
+    //     L.map(L.map(_ => '*')),
+    //     L.map(join('')),
+    //     join('\n'),
+    //     console.log,
+    // );
 
     /*_.go(
 		L.range(1, 6),
@@ -98,16 +99,16 @@
 9. 구구단
 
 <script>
-    _.go(
-        L.range(2, 10),
-        L.map(a => _.go(
-            L.range(1, 10),
-            L.map(b => `${a}x${b}=${a * b}`),
-            join('\n'),
-        )),
-        join('\n\n'),
-        console.log
-    );
+    // _.go(
+    //     L.range(2, 10),
+    //     L.map(a => _.go(
+    //         L.range(1, 10),
+    //         L.map(b => `${a}x${b}=${a * b}`),
+    //         join('\n'),
+    //     )),
+    //     join('\n\n'),
+    //     console.log
+    // );
 </script>
 
 
